@@ -24,6 +24,7 @@ type Price struct {
 
 // App of search
 type App struct {
+	SpecialLang              bool
 	AdSupported              bool
 	AndroidVersion           string
 	AndroidVersionMin        float64
@@ -83,6 +84,10 @@ type Options struct {
 	Language string
 }
 
+func (app *App) SetSpecialLang(l bool) {
+	app.SpecialLang = l
+}
+
 // LoadDetails of app
 func (app *App) LoadDetails() error {
 	if app.URL == "" {
@@ -128,7 +133,11 @@ func (app *App) LoadDetails() error {
 		app.ContentRating = util.GetJSONValue(appData[dsAppInfo], "1.2.9.0")
 		app.ContentRatingDescription = util.GetJSONValue(appData[dsAppInfo], "1.2.9.2.1")
 
-		app.DescriptionHTML = util.GetJSONValue(appData[dsAppInfo], "1.2.72.0.1")
+		if !app.SpecialLang {
+			app.DescriptionHTML = util.GetJSONValue(appData[dsAppInfo], "1.2.72.0.1")
+		} else {
+			app.DescriptionHTML = util.GetJSONValue(appData[dsAppInfo], "1.2.12.0.0.1")
+		}
 		app.Description = util.HTMLToText(app.DescriptionHTML)
 
 		devURL, _ := util.AbsoluteURL(playURL, relativeDevURL)
