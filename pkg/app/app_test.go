@@ -6,7 +6,7 @@ import (
 )
 
 func TestLoadDetails(t *testing.T) {
-	app := New("com.nekki.vector.paid", Options{"us", "en"})
+	app := New("com.nekki.vector.paid", Options{"us", "en", ""})
 	err := app.LoadDetails()
 	if err != nil {
 		t.Error(err)
@@ -180,7 +180,7 @@ func TestLoadDetails(t *testing.T) {
 }
 
 func TestLoadPermissions(t *testing.T) {
-	app := New("com.android.chrome", Options{"us", "us"})
+	app := New("com.android.chrome", Options{"us", "us", ""})
 	err := app.LoadPermissions()
 	if err != nil {
 		t.Error(err)

@@ -82,6 +82,7 @@ type App struct {
 type Options struct {
 	Country  string
 	Language string
+	Cpp      string
 }
 
 func (app *App) SetSpecialLang(l bool) {
@@ -96,6 +97,9 @@ func (app *App) LoadDetails() error {
 		} else {
 			return fmt.Errorf("App ID or URL required")
 		}
+	}
+	if app.options.Cpp != "" {
+		app.URL += "&listing=" + app.options.Cpp
 	}
 
 	req, err := http.NewRequest("GET", app.URL, nil)
